@@ -1,4 +1,9 @@
-// Implemented a "sorted" binary tree and a traversal algorithm
+/** Implemented a "sorted" binary tree and a traversal algorithm, using smart pointers
+ *	
+ *	@author Arsalan Azmi
+ *  @version 1.2, 18th March 2019
+ */
+
 #include <iostream>
 #include <string>
 #include <memory>
@@ -6,12 +11,15 @@
 using namespace std;
 
 class Node{
-    public:
     
+    private:
     int data;
+    //left and right nodes
     Node*left;
     Node*right;
     
+    public:
+    //initialize left and right nodes as nullptrs
     Node(){
         left = nullptr;
         right = nullptr;
@@ -23,14 +31,24 @@ class Node{
         right = nullptr;
     }
     
+    /**
+     * Sets the value of the node
+     *
+     * @param val Value to set
+     */
     void set_value(int val){
         data = val;
     }
     
+    /**
+     * Insert a leaf in the binary tree according to given value.
+     *
+     * @param val Value to insert
+     */
     void insert(int val){
         if(val < data){
-            if(left != nullptr) left->insert(val);
-            else left = new Node(val);
+            if(left != nullptr) left->insert(val); //if node exists, insert in that node
+            else left = new Node(val); //else, create node with given value
         }
         else{
             if(right != nullptr) right->insert(val);
@@ -38,30 +56,35 @@ class Node{
         }
     }
     
+    /**
+     * Traverses the binary tree and prints in-order.
+   	 *
+	 */
     void printTree(){
+    	//check if this node has value
         if(this == nullptr){
             return;
         }
-        left->printTree();
-        cout << this->data << " ";
-        right->printTree();
+        left->printTree(); //go to left node
+        cout << this->data << " "; //print root
+        right->printTree(); //go to right node
     }
 };
 
 //makes an array of given size, fills it, inserts every element in a bst and prints the tree.
 void fill_and_print(unsigned int size){
-  int values[size];
-  unique_ptr<Node> root(new Node(values[0]));
-  srand((unsigned)time(0));
+  int values[size]; //empty array of given size
+  unique_ptr<Node> root(new Node(values[0])); //make a unique pinter for our root node.
+  srand((unsigned)time(0)); //generate random ints
   
   for(unsigned int i=0; i<size; i++){ 
-      values[i] = (rand()%100)+1;
-      if(i == 0) root->set_value(values[i]);
-      else root->insert(values[i]);
+      values[i] = (rand()%100)+1; //fill array
+      if(i == 0) root->set_value(values[i]); //set root value
+      else root->insert(values[i]); //insert other values in our tree
   }
   
   root->printTree();
-  delete[] values;
+  delete[] values; //delete the array
 }
 
 int main()
