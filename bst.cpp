@@ -73,8 +73,7 @@ int main()
   root.insert(19);
   root.insert(21);
   root.insert(0);
-
-  fill_and_print(30); //prints a sorted tree of 30 elements
-
   root.printTree();
+  cout << "\n" << "Printing a random sorted binary tree: ";
+  fill_and_print(30); //prints a sorted tree of 30 elements
 }
